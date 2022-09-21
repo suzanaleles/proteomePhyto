@@ -11,7 +11,9 @@ The model is written in Julia and contains three files:
 
 ## Model analyses 
 
-Model analyses were carriedout in R. R code to vizualize and reproduce the figures in the paper are given here
+Model analyses were carriedout in R. R code to vizualize and reproduce the figures in the paper are given in:
+1) val.R for model validation
+2) sensi.R for all other figures and sensitivity analyses
 
 
 
