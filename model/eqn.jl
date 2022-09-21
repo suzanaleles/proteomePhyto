@@ -61,15 +61,16 @@ end)
         vlb, ( kref["lb"] * γTa ) * clb * cic / ( K["lb"] + cic )                              # moles of carbon/μm3/min
         vld, ( kref["ld"] * γTa ) * cld                                                        # moles of carbon/μm3/min
         vgl_day, ( kref["gl"] * γTa ) * (cgl * αday) * cic / ( K["gl"] + cic )                 # moles of carbon/μm3/min
-        vgl, ( kref["gl"] * γTa ) * (cgl * αnight)                                             # moles of carbon/μm3/min
+        vgl_night, ( kref["gl"] * γTa ) * (cgl * αnight)                                       # moles of carbon/μm3/min
         vu,  ( kref["u"]  * γTd ) * cp                                                         # moles of photosystems/μm3/min
         vf,  ( kref["f"]  * γTa ) * cre * (cup/(cup + cp))                                     # moles of photosystems/μm3/min
         #vf, ( kref["f"] * γTa ) * cre * (cup/(cup + K["f"]))                                  # moles of photosystems/μm3/min; alternative approach
-        vres,  vld + vgl + vgl_day                                                             # moles of carbon/μm3/min
-        cgu,  vgl / ηguc * dt                                                                  # moles of glucose/μm3
+        vgl,   vgl_night + vgl_day                                                             # moles of carbon/μm3/min
+        vres,  vld + vgl_night + vgl_day                                                       # moles of carbon/μm3/min
+        cgu,  vgl_night / ηguc * dt                                                            # moles of glucose/μm3
         cli,  vld / ηlic * dt                                                                  # moles of lipid droplet (6C TAG)/μm3
         ηaan,  ηaac * ((ϕtr + ϕru + ϕlb + ϕld + ϕgl + ϕre)*Qpt + ϕri*Qri + ϕp*Qp)              # moles of nitrogen / mol of amino acid
-        Qnc,     cin/(cic + clm*ηlic + cli*ηlic + cgu*ηguc)                                    # nitrogen to carbon ratio
+        Qnc,    cin/(cic + clm*ηlic + cli*ηlic + cgu*ηguc)                                     # nitrogen to carbon ratio
         Qtot,   ctr*ηtr + cru*ηru + clb*ηlb + cld*ηld + cgl*ηgl + cre*ηre + cri*ηri +
                 (cp + cup)*ηp + cin*ηin + cic*ηic + clm*ηli + cli*ηli + cgu*ηgu + cot*ηot
         Qcell,  ( (ctr*ηtr + cru*ηru + clb*ηlb + cld*ηld + cgl*ηgl + cre*ηre)*Qpt +            # nitrogen to carbon quota of the cell
@@ -104,13 +105,13 @@ end)
         ϕgl * vri * 1/(ηgl/ηaa) - exp(logμ) * cgl == 0.0                         # protein: cgl/μm3
         ϕre * vri * 1/(ηre/ηaa) - exp(logμ) * cre == 0.0                         # protein: cre/μm3
         vtr - vri*ηaan - exp(logμ) * cin == 0.0                                  # internal pool of nitrogen/μm3
-        vru - vri*ηaac - vlb - vgl_day - vgl - exp(logμ) * cic == 0.0            # internal pool of carbon/μm3
+        vru - vri*ηaac - vlb - vgl_day - vgl_night - exp(logμ) * cic == 0.0      # internal pool of carbon/μm3
         (1 - αlm) * vlb/ηlic - exp(logμ) * clm == 0.0                            # membrane lipids/μm3
         vld == αlm * vlb                                                         # lipid degradation rate; moles of carbon/μm3/min
         # energetic requirements:
         vp * e_p ≥ vru * e_ru                                                    # rubisco costs are paid by photosystems; energy/μm3/min
         ecost ≤ (vp*e_p - vru*e_ru) + vgl_day*e_gl                               # total ATP cost; energy/μm3/min
-        ecost*fdr ≤ vgl*e_gl + vld*e_ld                                          # dark respiration; energy/μm3/min
+        ecost*fdr ≤ vgl_night*e_gl + vld*e_ld                                    # dark respiration; energy/μm3/min
         1/ϵ * D ≤ Dmax                                                           # density constraint; Da/μm3
 end)
 
