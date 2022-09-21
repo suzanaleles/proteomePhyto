@@ -69,4 +69,5 @@ e_re = 4.5                       # energy / photosystem
 e_gl = 5.0                       # energy / carbon
 e_ld = 6.6                       # energy / carbon
 
+fdr = 0.25                       # fraction of respiration that happens in the dark
 dt = 12*60                       # light period (12h) in which the cell stores energy that will be burned at night (unit: minutes)
