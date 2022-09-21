@@ -65,11 +65,11 @@ end)
         vu,  ( kref["u"]  * γTd ) * cp                                                         # moles of photosystems/μm3/min
         vf,  ( kref["f"]  * γTa ) * cre * (cup/(cup + cp))                                     # moles of photosystems/μm3/min
         #vf, ( kref["f"] * γTa ) * cre * (cup/(cup + K["f"]))                                  # moles of photosystems/μm3/min; alternative approach
-        vres,  vld + vgl                                                                       # moles of carbon/μm3/min
+        vres,  vld + vgl + vgl_day                                                             # moles of carbon/μm3/min
         cgu,  vgl / ηguc * dt                                                                  # moles of glucose/μm3
         cli,  vld / ηlic * dt                                                                  # moles of lipid droplet (6C TAG)/μm3
         ηaan,  ηaac * ((ϕtr + ϕru + ϕlb + ϕld + ϕgl + ϕre)*Qpt + ϕri*Qri + ϕp*Qp)              # moles of nitrogen / mol of amino acid
-        Qnc,     cin/(cic + clm*ηlic + cli*ηlic + cgu*ηguc)                                     # nitrogen to carbon ratio
+        Qnc,     cin/(cic + clm*ηlic + cli*ηlic + cgu*ηguc)                                    # nitrogen to carbon ratio
         Qtot,   ctr*ηtr + cru*ηru + clb*ηlb + cld*ηld + cgl*ηgl + cre*ηre + cri*ηri +
                 (cp + cup)*ηp + cin*ηin + cic*ηic + clm*ηli + cli*ηli + cgu*ηgu + cot*ηot
         Qcell,  ( (ctr*ηtr + cru*ηru + clb*ηlb + cld*ηld + cgl*ηgl + cre*ηre)*Qpt +            # nitrogen to carbon quota of the cell
@@ -110,7 +110,7 @@ end)
         # energetic requirements:
         vp * e_p ≥ vru * e_ru                                                    # rubisco costs are paid by photosystems; energy/μm3/min
         ecost ≤ (vp*e_p - vru*e_ru) + vgl_day*e_gl                               # total ATP cost; energy/μm3/min
-        ecost*0.25 ≤ vgl*e_gl + vld*e_ld                                         # dark respiration; energy/μm3/min
+        ecost*fdr ≤ vgl*e_gl + vld*e_ld                                          # dark respiration; energy/μm3/min
         1/ϵ * D ≤ Dmax                                                           # density constraint; Da/μm3
 end)
 
