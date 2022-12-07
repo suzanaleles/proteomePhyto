@@ -66,8 +66,8 @@ end)
         #vre, ( kref["re"] * γTa ) * pre * (pdp/(pdp + K["f"]))                                 # molecules of photosystems/μm3/min; alternative approach
         vgl,   ( kref["gl"] * γTa ) * pgl                                                      # molecules of carbon/μm3/min
         vres,  vld + vgl                                                                       # molecules of carbon/μm3/min
-        cgu,  vgl / ηguc * dt                                                                  # molecules of glucose/μm3 (required to fuel dark respiration)
-        cli,  vld / ηlic * dt                                                                  # molecules of lipid storage/μm3 (required to fuel dark respiration)
+        cgu,  vgl / ηguc * td                                                                  # molecules of glucose/μm3 (required to fuel dark respiration)
+        cli,  vld / ηlic * td                                                                  # molecules of lipid storage/μm3 (required to fuel dark respiration)
         ηaan,  ηaac * ((ϕtr + ϕru + ϕlb + ϕld + ϕgl + ϕre)*Qpt + ϕri*Qri + ϕp*Qp)              # molecules of nitrogen / molecule of amino acid
         Qn,   (ptr*ηtr*Qpt + pru*ηru*Qpt + plb*ηlb*Qpt + pld*ηld*Qpt + pgl*ηgl*Qpt + 
                pre*ηre*Qpt + pri*ηri*Qri + (pp + pdp)*ηp*Qp + cot*ηot*Qpt)*ηaac/ηaa + cin      # total number of molecules of nitrogen/um3
