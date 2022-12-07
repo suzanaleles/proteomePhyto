@@ -1,8 +1,8 @@
-#########################################################################
+#-----------------------------------------------------------------------#
 # Iterate over different environmental conditions and save model output #
-#########################################################################
+#-----------------------------------------------------------------------#
 
-# August 2022; by Suzana Goncalves Leles
+# December 2022; by Suzana Goncalves Leles
 
 # Optimal solutions looping over different environmental conditions.
 env = "Temperature (C°)" # should be one of the following: Light, Temperature (C°) or [DIN]
@@ -27,15 +27,15 @@ end
 # Define empty vectors
 s_μ     = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_β     = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_ctr   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_cri   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_clb   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_cup   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_cp    = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_cru   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_cld   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_cgl   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_cre   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_ptr   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_pri   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_plb   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_pdp   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_pp    = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_pru   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_pld   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_pgl   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_pre   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_ϕtr   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_ϕri   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_ϕlb   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
@@ -52,27 +52,29 @@ s_vru   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(chan
 s_vres  = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_vp    = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_vgl   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_vu    = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_vf    = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_vd    = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_vre    = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_vlb   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_vld   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_vri   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_vtr   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_vol   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_totp  = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_αlm   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_αld   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_D     = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_γTa   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_γTd   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_γTad  = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_γTm   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_γTli  = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_cli   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_cgu   = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_ecost = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_ηaan  = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 s_ϵ     = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_αday  = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
-s_αnight = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_ctag = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_αlm  = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
+s_αtag  = Array{Float64,3}(undef,length(change_T),length(change_DIN),length(change_I))
 
 # Store model output in empty vectors
 for i in 1:length(change_DIN)
@@ -84,15 +86,15 @@ for i in 1:length(change_DIN)
                         optimize!(model)
                         s_μ[j,i,k]   = exp.(JuMP.value.(logμ))
                         s_β[j,i,k]   = JuMP.value.(β)
-                        s_ctr[j,i,k] = JuMP.value.(ctr)
-                        s_cri[j,i,k] = JuMP.value.(cri)
-                        s_clb[j,i,k] = JuMP.value.(clb)
-                        s_cup[j,i,k] = JuMP.value.(cup)
-                        s_cp[j,i,k]  = JuMP.value.(cp)
-                        s_cru[j,i,k] = JuMP.value.(cru)
-                        s_cld[j,i,k] = JuMP.value.(cld)
-                        s_cgl[j,i,k] = JuMP.value.(cgl)
-                        s_cre[j,i,k] = JuMP.value.(cre)
+                        s_ptr[j,i,k] = JuMP.value.(ptr)
+                        s_pri[j,i,k] = JuMP.value.(pri)
+                        s_plb[j,i,k] = JuMP.value.(plb)
+                        s_pdp[j,i,k] = JuMP.value.(pdp)
+                        s_pp[j,i,k]  = JuMP.value.(pp)
+                        s_pru[j,i,k] = JuMP.value.(pru)
+                        s_pld[j,i,k] = JuMP.value.(pld)
+                        s_pgl[j,i,k] = JuMP.value.(pgl)
+                        s_pre[j,i,k] = JuMP.value.(pre)
                         s_ϕtr[j,i,k] = JuMP.value.(ϕtr)
                         s_ϕri[j,i,k] = JuMP.value.(ϕri)
                         s_ϕlb[j,i,k] = JuMP.value.(ϕlb)
@@ -109,30 +111,33 @@ for i in 1:length(change_DIN)
                         s_vres[j,i,k] = value(vres)
                         s_vp[j,i,k]   = value(vp)
                         s_vgl[j,i,k]  = value(vgl)
-                        s_vu[j,i,k]   = value(vu)
-                        s_vf[j,i,k]   = value(vf)
+                        s_vd[j,i,k]   = value(vd)
+                        s_vre[j,i,k]   = value(vre)
                         s_vlb[j,i,k]  = value(vlb)
                         s_vld[j,i,k]  = value(vld)
                         s_vri[j,i,k]  = value(vri)
                         s_vtr[j,i,k]  = value(vtr)
                         s_vol[j,i,k]  = value(vol)
                         s_totp[j,i,k] = value(tot_p)
-                        s_αlm[j,i,k]  = JuMP.value.(αlm)
+                        s_αld[j,i,k]  = JuMP.value.(αld)
                         s_D[j,i,k]    = value(D)
                         s_γTa[j,i,k]  = value(γTa)
                         s_γTd[j,i,k]  = value(γTd)
                         s_γTad[j,i,k] = value(γTad)
                         s_γTm[j,i,k]  = value(γTm)
+                        s_γTli[j,i,k] = value(γTli)
                         s_cli[j,i,k]  = value(cli)
                         s_cgu[j,i,k]  = value(cgu)
                         s_ecost[j,i,k] = value(ecost)
                         s_ηaan[j,i,k]  = value(ηaan)
                         s_ϵ[j,i,k]     = value(ϵ)
-                        s_αday[j,i,k]  = JuMP.value.(αday)
-                        s_αnight[j,i,k]  = JuMP.value.(αnight)
+                        s_ctag[j,i,k]  = JuMP.value.(ctag)
+                        s_αlm[j,i,k]  = JuMP.value.(αlm)
+                        s_αtag[j,i,k]  = JuMP.value.(αtag)
                 end
         end
 end
+
 
 using CSV
 using DataFrames
@@ -140,9 +145,11 @@ using DataFrames
 output = DataFrame(temp = variable, mu = s_μ[a,b,c]*60*24, size = s_β[a,b,c]*3*2,
                    NC = s_Qcell[a,b,c], phot = s_vru[a,b,c], resp = s_vres[a,b,c],
                    totp = s_totp[a,b,c],
-                   chlvol = s_cp[a,b,c] + s_cup[a,b,c],
+                   chlvol = s_pp[a,b,c] + s_pdp[a,b,c],
                    ilpd = s_ϕld[a,b,c], icbd = s_ϕgl[a,b,c], ichl = s_ϕp[a,b,c], icha = s_ϕre[a,b,c],
                    itr = s_ϕtr[a,b,c], ilpb = s_ϕlb[a,b,c],
-                   irib = s_ϕri[a,b,c], irub = s_ϕru[a,b,c], clip = s_clm[a,b,c], ctr = s_ctr[a,b,c],
-                   cp = s_cp[a,b,c], cup = s_cup[a,b,c], cri = s_cri[a,b,c], cli = s_cli[a,b,c], cgu = s_cgu[a,b,c])
-CSV.write("output.csv", output, header = true)
+                   irib = s_ϕri[a,b,c], irub = s_ϕru[a,b,c], clip = s_clm[a,b,c], ctr = s_ptr[a,b,c],
+                   cp = s_pp[a,b,c], cup = s_pdp[a,b,c], cri = s_pri[a,b,c], 
+                   cli = s_cli[a,b,c], cgu = s_cgu[a,b,c], ctag = s_ctag[a,b,c],
+                   ctot = s_cli[a,b,c] * ηlic .+ s_cgu[a,b,c] * ηguc .+ s_ctag[a,b,c] * ηlic)
+CSV.write("output_liang_gly_2.csv", output, header = true)
